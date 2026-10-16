@@ -11,6 +11,9 @@ const gAboutPane = {
 	init() {
 		// #region Categories Sidebar
 		const categoriesElm = document.getElementById("categories");
+		// Redesigned Firefox preferences no longer expose the legacy pane layout.
+		if (!categoriesElm || !document.getElementById("mainPrefPane"))
+			return;
 
 		const aboutCategoryElm = document.createXULElement("richlistitem")
 		aboutCategoryElm.id = "category-about";
@@ -105,6 +108,8 @@ const gAboutPane = {
 }
 
 function addProductName() {
+	if (!document.getElementById("categories"))
+		return;
 	let sidebarHeader = document.getElementById("sidebarHeader");
 
 	if (!sidebarHeader) {
@@ -117,11 +122,20 @@ function addProductName() {
 }
 
 function updateInfo() {
+	if (!document.getElementById("chrVersion") || !document.getElementById("chrCopyright"))
+		return;
 	document.getElementById("chrVersion").textContent = aboutBundle.GetStringFromName("version").replace("%s", gkEras.getEras("main")[gkEras.getBrowserEra()].basedOnVersion);
 	document.getElementById("chrCopyright").textContent = aboutBundle.GetStringFromName("copyright25").replace("%s", gkBranding.getBrandingKey("vendorName")).replace("%d",gkEras.getEras("main")[gkEras.getBrowserEra()].year);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+	// Keep native preferences functional if Firefox changes/removes the old DOM.
+	// Our optional About pane requires both that DOM and the legacy pane API.
+	if (!document.getElementById("categories") || !document.getElementById("mainPrefPane") ||
+		!document.querySelector(".sticky-container") || !document.getElementById("policies-container") ||
+		typeof register_module !== "function" || typeof gotoPref !== "function")
+		return;
+
 	addProductName();
 
 	const stickyContainer = document.querySelector(".sticky-container");

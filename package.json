@@ -1,0 +1,6 @@
+{
+  "name": "geckium-patched-build",
+  "private": true,
+  "scripts": {"package": "bash scripts/package-linux.sh"},
+  "devDependencies": {"sass": "1.93.2"}
+}

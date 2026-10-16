@@ -1,3 +1,7 @@
+> **Patched Linux ESR distribution:** see [PATCHED-LINUX.md](PATCHED-LINUX.md)
+> for the ESR 153+ multi-window fix, installer, packaging and regression test.
+> Fork releases: https://github.com/SilverGlenn/Geckium/releases
+
 # Geckium
 ## A love letter to the history of Chromium and its derivatives
 

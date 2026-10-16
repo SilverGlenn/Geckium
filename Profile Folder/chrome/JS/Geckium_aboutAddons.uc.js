@@ -6,6 +6,9 @@
 // ==/UserScript==
 
 function addProductName() {
+	// The redesigned add-ons manager may not have the legacy sidebar.
+	if (!document.getElementById("categories"))
+		return;
 	let sidebarHeader = document.getElementById("sidebarHeader");
 
 	if (!sidebarHeader) {

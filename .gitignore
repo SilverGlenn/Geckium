@@ -12,3 +12,8 @@ Profile Folder/chrome/lwTesting
 !userChrome.css
 !userChrome.au.css
 !userContent.css
+node_modules/
+dist/
+verification-*.json
+verification-*.log
+__pycache__/

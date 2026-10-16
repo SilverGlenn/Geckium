@@ -8,6 +8,12 @@
 // @include		about:addons*
 // ==/UserScript==
 
+// Internal about: pages do not all expose browser-window globals (ESR 153+).
+// Use var so the imported binding is shared with later classic user scripts.
+if (typeof AppConstants === "undefined") {
+    var { AppConstants } = ChromeUtils.importESModule("resource://gre/modules/AppConstants.sys.mjs");
+}
+
 // Map of special characters and their corresponding HTML entities
 const specialCharacters = {
 	"&": "&amp;",
@@ -94,7 +100,7 @@ function openWindow(windowName, features) {
 }
 
 function updateZoomLabel() {
-	const win = gBrowser?.ownerGlobal ?? window;
+	const win = window.gBrowser?.ownerGlobal ?? window;
 	if (!win?.gNavigatorBundle) return;
 	const currentZoomLevel = win.gNavigatorBundle.getFormattedString("zoom-button.label", [ Math.round(win.ZoomManager.zoom * 100), ]); 
 
